@@ -32,7 +32,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
-COPY . /var/www/html
+COPY . ./
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
