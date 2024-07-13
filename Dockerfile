@@ -41,6 +41,8 @@ COPY --chown=www-data:www-data . /var/www/html
 USER www-data
 
 RUN composer i
+RUN composer require google/cloud
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 8000
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
