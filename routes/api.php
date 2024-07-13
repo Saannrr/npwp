@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Kawasan Auth Sanctum
 Route::middleware(['auth:sanctum'])->group(function (){
 
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -24,4 +25,5 @@ Route::get('/user', [AuthController::class, 'userDetail']);
 
 });
 
+//Kawasan bebas Sanctum
 Route::post('/login', [AuthController::class, 'login']);
