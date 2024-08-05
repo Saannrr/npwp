@@ -16,14 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Kawasan Auth Sanctum
-Route::middleware(['auth:sanctum'])->group(function (){
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::apiResource('spts', SptController::class);
-Route::get('/user', [AuthController::class, 'userDetail']);
+Route::post('/users', [\App\Http\Controllers\UserController::class, 'register']);
+Route::post('/users/login', [\App\Http\Controllers\UserController::class, 'login']);
 
+Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function () {
+//    user routes
+   Route::get('/users/current', [\App\Http\Controllers\UserController::class, 'getUser']);
+   Route::patch('/users/current', [\App\Http\Controllers\UserController::class, 'update']);
+   Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout']);
+
+//   pengaruran routes
 });
-
-//Kawasan bebas Sanctum
-Route::post('/login', [AuthController::class, 'login']);
