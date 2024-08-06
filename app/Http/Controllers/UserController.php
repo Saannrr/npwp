@@ -20,7 +20,10 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if (User::where('npwp', $data['npwp'])->count() == 1 || User::where('nik', $data['nik'])->count() == 1){
+        // Validasi manual untuk NPWP dan NIK
+        $npwpExists = User::where('npwp', $data['npwp'])->count() == 1;
+        $nikExists = User::where('nik', $data['nik'])->count() == 1;
+        if ($npwpExists || $nikExists) {
             throw new HttpResponseException(response([
                 "errors" => [
                     "message" => [

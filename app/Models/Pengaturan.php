@@ -17,7 +17,9 @@ class Pengaturan extends Model
     protected $fillable = [
         'bertindak_sebagai',
         'identitas',
-        'npwp',
+        'npwp_id',
+        'nik_id',
+        'nama_penandatangan',
         'user_id',
         'status',
     ];
@@ -25,6 +27,11 @@ class Pengaturan extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function pegawai(): BelongsTo
+    {
+        return $this->belongsTo(IdentitasOrang::class, 'nik_id', 'nik')->orWhere('npwp_id', 'npwp');
     }
 
     public function pph_pasal(): HasMany

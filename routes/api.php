@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\SptController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::post('/users', [\App\Http\Controllers\UserController::class, 'register']);
+Route::post('/users/register', [\App\Http\Controllers\UserController::class, 'register']);
 Route::post('/users/login', [\App\Http\Controllers\UserController::class, 'login']);
 
 Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function () {
@@ -30,4 +28,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
    Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout']);
 
 //   pengaruran routes
+    Route::get('/pengaturan/cari-identitas', [\App\Http\Controllers\PengaturanController::class, 'cariIdentitas']);
+    Route::get('/pengaturan', [\App\Http\Controllers\PengaturanController::class, 'getAll']);
+    Route::post('/pengaturan/create', [\App\Http\Controllers\PengaturanController::class, 'create']);
+    Route::put('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'update']);
+    Route::delete('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'destroy']);
 });

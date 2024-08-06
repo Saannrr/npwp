@@ -17,12 +17,15 @@ return new class extends Migration
             $table->id();
             $table->enum('bertindak_sebagai', ['pengurus', 'kuasa']);
             $table->enum('identitas', ['npwp', 'nik']);
-            $table->string('npwp');
-            $table->unsignedBigInteger('user_id')->nullable(false);
+            $table->string('npwp_id', 15)->nullable()->unique('pengaturans_npwp_id_unique');
+            $table->string('nik_id', 16)->nullable()->unique('pengaturans_nik_id_unique');
+            $table->string('nama_penandatangan');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('status');
             $table->timestamps();
 
-            $table->foreign('user_id')->on('users')->references('id');
+            // Menambahkan foreign key
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
