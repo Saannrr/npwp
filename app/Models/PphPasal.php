@@ -20,18 +20,28 @@ class PphPasal extends Model
         'masa_pajak',
         'nama',
         'identitas',
-        'no_identitas',
-        'qq',
+        'npwp_id',
+        'nik_id',
+        'dasar_pemotongan_id',
         'kode_objek_pajak',
         'fasilitas_pajak_penghasilan',
         'no_fasilitas',
         'jumlah_penghasilan_bruto',
         'tarif',
         'jumlah_setor',
-        'no_bukti',
         'kelebihan_pemotongan',
         'status',
     ];
+
+    public function nama_dokumen(): BelongsTo
+    {
+        return $this->belongsTo(DasarPemotongan::class, 'dasar_pemotongan_id', 'id');
+    }
+
+    public function identitas_yang_dipotong(): BelongsTo
+    {
+        return $this->belongsTo(IdentitasOrang::class, 'nik_id', 'nik')->orWhere('npwp_id', 'npwp');
+    }
 
     public function pengaturan(): BelongsTo
     {
@@ -40,6 +50,6 @@ class PphPasal extends Model
 
     public function dokumen_pph_pasal(): HasOne
     {
-        return $this->hasOne(DokumenPphPasal::class, 'pph_pasal_id', 'id');
+        return $this->hasOne(DokumenPphPasal::class, 'pphpasal_id', 'id');
     }
 }

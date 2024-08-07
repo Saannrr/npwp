@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('objek_pajaks', function (Blueprint $table) {
+        Schema::create('dasar_pemotongans', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_pajak')->unique('objek_pajaks_kode_pajak_unique');
-            $table->string('nama_pajak');
-            $table->string('persen');
-            $table->string('netto')->nullable();
-            $table->enum('jenis',['non_residen','pasal']);
+            $table->string('jenis_dokumen');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('objek_pajaks');
+        Schema::dropIfExists('dasar_pemotongans');
     }
 };
