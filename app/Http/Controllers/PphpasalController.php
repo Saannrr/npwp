@@ -18,22 +18,6 @@ class PphpasalController extends Controller
         return PphpasalResource::collection($pphpasal);
     }
 
-    public function cariIdentitas(Request $request)
-    {
-        $query = $request->input('query');
-        $identitas = IdentitasOrang::where('npwp', $query)->orWhere('nik', $query)->first();
-
-        if ($identitas) {
-            return response()->json([
-                'data' => $identitas
-            ]);
-        }
-
-        return response()->json([
-            'errors' => 'Identitas tidak ditemukan'
-        ], 404);
-    }
-
     public function create(PphpasalCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -41,7 +25,7 @@ class PphpasalController extends Controller
         // Validasi manual untuk NPWP dan NIK
         $npwpExists = isset($data['npwp_id']) && PphPasal::where('npwp_id', $data['npwp_id'])->exists();
         $nikExists = isset($data['nik_id']) && PphPasal::where('nik_id', $data['nik_id'])->exists();
-//        $namaExists = isset($data['nama']) && Pengaturan::where('nama', $data['nama'])->exists();
+        //        $namaExists = isset($data['nama']) && Pengaturan::where('nama', $data['nama'])->exists();
 
         if ($npwpExists || $nikExists) {
             throw new HttpResponseException(response()->json([

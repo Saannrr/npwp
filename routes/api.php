@@ -29,9 +29,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
 
     //   identitas routes
     Route::get('/identitas', [\App\Http\Controllers\IdentitasController::class, 'getAllIdentitas']);
+    Route::get('/cari-identitas', [\App\Http\Controllers\IdentitasController::class, 'cariIdentitas']);
 
     //   pengaturan routes
-    Route::get('/pengaturan/cari-identitas', [\App\Http\Controllers\PengaturanController::class, 'cariIdentitas']);
     Route::get('/pengaturan', [\App\Http\Controllers\PengaturanController::class, 'getAll']);
     Route::post('/pengaturan/create', [\App\Http\Controllers\PengaturanController::class, 'create']);
     Route::put('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'update']);

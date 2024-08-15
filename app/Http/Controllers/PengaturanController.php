@@ -15,22 +15,6 @@ use Illuminate\Validation\ValidationException;
 
 class PengaturanController extends Controller
 {
-    public function cariIdentitas(Request $request)
-    {
-        $query = $request->input('query');
-        $identitas = IdentitasOrang::where('npwp', $query)->orWhere('nik', $query)->first();
-
-        if ($identitas) {
-            return response()->json([
-                'data' => $identitas
-            ]);
-        }
-
-        return response()->json([
-            'errors' => 'Identitas tidak ditemukan'
-        ], 404);
-    }
-
     public function create(PengaturanCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
