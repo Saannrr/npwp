@@ -22,19 +22,22 @@ Route::post('/users/register', [\App\Http\Controllers\UserController::class, 're
 Route::post('/users/login', [\App\Http\Controllers\UserController::class, 'login']);
 
 Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function () {
-//    user routes
-   Route::get('/users/current', [\App\Http\Controllers\UserController::class, 'getUser']);
-   Route::patch('/users/current', [\App\Http\Controllers\UserController::class, 'update']);
-   Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout']);
+    //    user routes
+    Route::get('/users/current', [\App\Http\Controllers\UserController::class, 'getUser']);
+    Route::patch('/users/current', [\App\Http\Controllers\UserController::class, 'update']);
+    Route::delete('/users/logout', [\App\Http\Controllers\UserController::class, 'logout']);
 
-//   pengaruran routes
+    //   identitas routes
+    Route::get('/identitas', [\App\Http\Controllers\IdentitasController::class, 'getAllIdentitas']);
+
+    //   pengaturan routes
     Route::get('/pengaturan/cari-identitas', [\App\Http\Controllers\PengaturanController::class, 'cariIdentitas']);
     Route::get('/pengaturan', [\App\Http\Controllers\PengaturanController::class, 'getAll']);
     Route::post('/pengaturan/create', [\App\Http\Controllers\PengaturanController::class, 'create']);
     Route::put('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'update']);
     Route::delete('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'destroy']);
 
-//   pphpasal routes
+    //   pphpasal routes
     Route::get('/pphpasal/cari-identitas', [\App\Http\Controllers\PphpasalController::class, 'cariIdentitas']);
     Route::get('/pphpasal', [\App\Http\Controllers\PphpasalController::class, 'getAll']);
     Route::post('/pphpasal/create', [\App\Http\Controllers\PphpasalController::class, 'create']);

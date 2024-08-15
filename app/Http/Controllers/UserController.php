@@ -62,8 +62,8 @@ class UserController extends Controller
 
     public function getUser(Request $request): UserResource
     {
-      $user = Auth::user();
-      return new UserResource($user);
+        $user = Auth::user();
+        return new UserResource($user);
     }
 
     public function update(UserUpdateRequest $request): UserResource
@@ -71,14 +71,15 @@ class UserController extends Controller
         $data = $request->validated();
         $user = Auth::user();
 
-        if (isset($data['email'])){
+        if (isset($data['email'])) {
             $user->email = $data['email'];
         }
 
-        if (isset($data['password'])){
+        if (isset($data['password'])) {
             $user->password = Hash::make($data['password']);
         }
 
+        /** @var \App\Models\User $user **/
         $user->save();
         return new UserResource($user);
     }
@@ -87,6 +88,8 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $user->token = null;
+
+        /** @var \App\Models\User $user **/
         $user->save();
 
         return response()->json([

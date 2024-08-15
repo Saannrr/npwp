@@ -22,25 +22,25 @@ class PengaturanController extends Controller
 
         if ($identitas) {
             return response()->json([
-               'data' => $identitas
+                'data' => $identitas
             ]);
         }
 
         return response()->json([
-           'errors' => 'Identitas tidak ditemukan'
+            'errors' => 'Identitas tidak ditemukan'
         ], 404);
     }
 
     public function create(PengaturanCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
-//        \Log::info('Data yang divalidasi:', $data);
+        //        \Log::info('Data yang divalidasi:', $data);
         $user = Auth::user();
 
         // Validasi manual untuk NPWP dan NIK
         $npwpExists = isset($data['npwp_id']) && Pengaturan::where('npwp_id', $data['npwp_id'])->exists();
         $nikExists = isset($data['nik_id']) && Pengaturan::where('nik_id', $data['nik_id'])->exists();
-//        $namaExists = isset($data['nama']) && Pengaturan::where('nama', $data['nama'])->exists();
+        //        $namaExists = isset($data['nama']) && Pengaturan::where('nama', $data['nama'])->exists();
 
         if ($npwpExists || $nikExists) {
             throw new HttpResponseException(response()->json([
