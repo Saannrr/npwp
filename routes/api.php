@@ -38,9 +38,11 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::delete('/pengaturan/{id}', [\App\Http\Controllers\PengaturanController::class, 'destroy']);
 
     //   pphpasal routes
-    Route::get('/pphpasal/cari-identitas', [\App\Http\Controllers\PphpasalController::class, 'cariIdentitas']);
     Route::get('/pphpasal', [\App\Http\Controllers\PphpasalController::class, 'getAll']);
     Route::post('/pphpasal/create', [\App\Http\Controllers\PphpasalController::class, 'create']);
     Route::put('/pphpasal/{id}', [\App\Http\Controllers\PphpasalController::class, 'update']);
     Route::delete('/pphpasal/{id}', [\App\Http\Controllers\PphpasalController::class, 'destroy']);
+
+    //   objekpajak routes
+    Route::get('/objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'getAll']);
 });

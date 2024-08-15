@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ObjekPajak extends Model
 {
-    use HasFactory;
+    protected $table = 'objek_pajaks';
+    protected $primaryKey = 'id';
+    protected $keyType = "int";
+    public $timestamps = true;
+    public $incrementing = true;
 }

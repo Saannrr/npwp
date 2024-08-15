@@ -52,4 +52,9 @@ class PphPasal extends Model
     {
         return $this->hasOne(DokumenPphPasal::class, 'pphpasal_id', 'id');
     }
+
+    public function kode_objek_pajak(): BelongsTo
+    {
+        return $this->belongsTo(ObjekPajak::class, 'kode_objek_pajak', 'id');
+    }
 }
