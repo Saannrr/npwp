@@ -21,7 +21,6 @@ class PphpasalController extends Controller
         return PphpasalResource::collection($pphpasal);
     }
 
-    // TODO: Ternyata untuk identitas (perusahaan) yang dipotong itu boleh dipotong berkali-kali, dan pengaturan itu yang jadi penandatangan untuk perusahaan yg akan dipotong ini, jadi lu bikin tabel database lagi untuk identitas perusahaan, lalu identitas orang itu untuk si penandatangan pemotongan pajak perusahaan yang akan dipotong!
     public function create(PphpasalCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
