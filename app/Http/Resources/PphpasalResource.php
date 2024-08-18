@@ -15,7 +15,8 @@ class PphpasalResource extends JsonResource
     public function toArray($request)
     {
         return [
-          'pengaturan_id' => $this->pengaturan_id,
+            'id' => $this->id,
+            'pengaturan_id' => $this->pengaturan_id,
             'tahun_pajak' => $this->tahun_pajak,
             'masa_pajak' => $this->masa_pajak,
             'nama' => $this->nama,

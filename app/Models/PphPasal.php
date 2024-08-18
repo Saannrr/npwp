@@ -38,9 +38,9 @@ class PphPasal extends Model
         return $this->belongsTo(DasarPemotongan::class, 'dasar_pemotongan_id', 'id');
     }
 
-    public function identitas_yang_dipotong(): BelongsTo
+    public function identitas_perusahaan_yang_dipotong(): BelongsTo
     {
-        return $this->belongsTo(IdentitasOrang::class, 'nik_id', 'nik')->orWhere('npwp_id', 'npwp');
+        return $this->belongsTo(IdentitasPerusahaan::class, 'nik_id', 'nik_perusahaan')->orWhere('npwp_id', 'npwp_perusahaan');
     }
 
     public function pengaturan(): BelongsTo
@@ -55,6 +55,6 @@ class PphPasal extends Model
 
     public function kode_objek_pajak(): BelongsTo
     {
-        return $this->belongsTo(ObjekPajak::class, 'kode_objek_pajak', 'id');
+        return $this->belongsTo(ObjekPajak::class, 'kode_objek_pajak', 'kode_pajak');
     }
 }

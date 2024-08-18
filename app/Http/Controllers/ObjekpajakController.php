@@ -13,4 +13,20 @@ class ObjekpajakController extends Controller
         $objekpajak = ObjekPajak::all();
         return ObjekpajakResource::collection($objekpajak);
     }
+
+    public function cariObjekPajak(Request $request)
+    {
+        $query = $request->input('query');
+        $objekpajak = ObjekPajak::where('kode_pajak', $query)->first();
+
+        if ($objekpajak) {
+            return response()->json([
+                new ObjekpajakResource($objekpajak)
+            ]);
+        }
+
+        return response()->json([
+            'errors' => 'Kode pajak tidak ditemukan'
+        ], 404);
+    }
 }

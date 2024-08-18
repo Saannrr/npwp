@@ -26,6 +26,7 @@ class PphpasalCreateRequest extends FormRequest
     public function rules()
     {
         return [
+            'pengaturan_id' => ['required'],
             'tahun_pajak' => ['required', 'max:4', 'min:4'],
             'masa_pajak' => ['required'],
             'nama' => ['required', 'string', 'max:255'],

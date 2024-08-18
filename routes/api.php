@@ -31,6 +31,10 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::get('/identitas', [\App\Http\Controllers\IdentitasController::class, 'getAllIdentitas']);
     Route::get('/cari-identitas', [\App\Http\Controllers\IdentitasController::class, 'cariIdentitas']);
 
+    // identitas perusahaan routes
+    Route::get('/identitas-perusahaan', [\App\Http\Controllers\IdentitasPerusahaanController::class, 'getAll']);
+    Route::get('/cari-identitas-perusahaan', [\App\Http\Controllers\IdentitasPerusahaanController::class, 'cariIdentitasPerusahaan']);
+
     //   pengaturan routes
     Route::get('/pengaturan', [\App\Http\Controllers\PengaturanController::class, 'getAll']);
     Route::post('/pengaturan/create', [\App\Http\Controllers\PengaturanController::class, 'create']);
@@ -45,4 +49,5 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
 
     //   objekpajak routes
     Route::get('/objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'getAll']);
+    Route::get('/cari-objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'cariObjekPajak']);
 });
