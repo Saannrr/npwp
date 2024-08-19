@@ -20,11 +20,12 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
+        '*',
         'http://localhost:3000',
-        'https://npwp-api-4g72mg5heq-et.a.run.app'
+        'https://npwp-api-4g72mg5heq-et.a.run.app',
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => ['*'],
 
     'allowed_headers' => [
         'Access-Control-Allow-Origin',
