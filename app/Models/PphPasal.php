@@ -16,13 +16,14 @@ class PphPasal extends Model
     public $incrementing = true;
     protected $fillable = [
         'pengaturan_id',
+        'penandatangan_bukti_potong',
         'tahun_pajak',
         'masa_pajak',
         'nama',
         'identitas',
         'npwp_id',
         'nik_id',
-        'dasar_pemotongan_id',
+        'dokumen_pph_pasal_id',
         'kode_objek_pajak',
         'fasilitas_pajak_penghasilan',
         'no_fasilitas',
@@ -32,11 +33,6 @@ class PphPasal extends Model
         'kelebihan_pemotongan',
         'status',
     ];
-
-    public function nama_dokumen(): BelongsTo
-    {
-        return $this->belongsTo(DasarPemotongan::class, 'dasar_pemotongan_id', 'id');
-    }
 
     public function identitas_perusahaan_yang_dipotong(): BelongsTo
     {

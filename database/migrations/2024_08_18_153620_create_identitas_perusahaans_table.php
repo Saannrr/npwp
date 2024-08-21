@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('kategori_perusahaan');
             $table->text('alamat');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

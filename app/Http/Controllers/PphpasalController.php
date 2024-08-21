@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\PphPasal;
 use Illuminate\Http\Request;
 use App\Models\IdentitasOrang;
+use App\Models\DokumenPphPasal;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Models\IdentitasPerusahaan;
 use App\Http\Resources\PphpasalResource;
 use App\Http\Requests\PphpasalCreateRequest;
 use App\Http\Requests\PphpasalUpdateRequest;
-use App\Models\IdentitasPerusahaan;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\DB;
 
 class PphpasalController extends Controller
 {
@@ -40,6 +41,12 @@ class PphpasalController extends Controller
             ], 400));
         }
 
+        // Ambil dokumen yang baru dibuat
+        $dokumen = DokumenPphPasal::findOrFail($data['dokumen_pph_pasal_id']);
+
+        // ambil id dokumen pph pasal id
+        $data['dokumen_pph_pasal_id'] = $dokumen->id;
+
         // Ambil tarif dari tabel objekpajak berdasarkan kode objek pajak
         $kodeObjekPajak = $data['kode_objek_pajak'];
         $objekPajak = DB::table('objek_pajaks')->where('kode_pajak', $kodeObjekPajak)->first();
@@ -66,6 +73,10 @@ class PphpasalController extends Controller
 
         $pphpasal = new PphPasal($data);
         $pphpasal->save();
+
+        // Update dokumen dengan pphpasal_id yang baru dibuat
+        $dokumen->pphpasal_id = $pphpasal->id;
+        $dokumen->save();
 
         return (new PphpasalResource($pphpasal))->response()->setStatusCode(201);
     }

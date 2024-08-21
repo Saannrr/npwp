@@ -50,4 +50,7 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     //   objekpajak routes
     Route::get('/objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'getAll']);
     Route::get('/cari-objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'cariObjekPajak']);
+
+    //   dokumen pphpasal routes
+    Route::get('/dokumen-pphpasal', [\App\Http\Controllers\DokumenPphpasalController::class, 'getAll']);
 });

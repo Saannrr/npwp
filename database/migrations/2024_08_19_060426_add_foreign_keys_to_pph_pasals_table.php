@@ -1,5 +1,6 @@
 <?php
 
+use Brick\Math\BigInteger;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dasar_pemotongans', function (Blueprint $table) {
-            $table->id();
-            $table->string('jenis_dokumen');
-            $table->timestamps();
+        Schema::table('pph_pasals', function (Blueprint $table) {
+            $table->index('dokumen_pph_pasal_id');
+
+            $table->foreign('dokumen_pph_pasal_id')->references('id')->on('dokumen_pph_pasals');
         });
     }
 
@@ -27,6 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dasar_pemotongans');
+        Schema::table('pph_pasals', function (Blueprint $table) {
+            //
+        });
     }
 };

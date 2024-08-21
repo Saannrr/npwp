@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('kode_pajak')->unique('objek_pajaks_kode_pajak_unique');
             $table->string('nama_pajak');
-            $table->string('persen');
+            $table->decimal('persen', 5, 4);
             $table->string('netto')->nullable();
-            $table->enum('jenis',['non_residen','pasal']);
+            $table->enum('jenis', ['non_residen', 'pasal']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

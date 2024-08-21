@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
 
             // Menambahkan foreign key
             $table->foreign('user_id')->references('id')->on('users');

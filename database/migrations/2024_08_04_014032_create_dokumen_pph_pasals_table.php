@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('dokumen_pph_pasals', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_dokumen');
+            $table->enum('nama_dokumen', ['faktur pajak', 'invoice', 'pengumuman', 'surat perjanjian', 'bukti pembayaran', 'akta perikatan', 'akta rups', 'surat pernyataan']);
             $table->string('no_dokumen');
-            $table->string('tgl_dokumen');
+            $table->date('tgl_dokumen');
             $table->unsignedBigInteger('pphpasal_id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('pphpasal_id')->references('id')->on('pph_pasals');
         });
