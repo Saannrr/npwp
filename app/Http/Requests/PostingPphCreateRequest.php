@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DokumenPphpasalCreateRequest extends FormRequest
+class PostingPphCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,14 @@ class DokumenPphpasalCreateRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-
-    //  TODO: coba pikirin biar pphpasal_id ga boleh kosong dan otomatis diisi dengan id pphpasal yang sedang di isi
     public function rules()
     {
         return [
-            'nama_dokumen' => ['required', 'max:100'],
-            'no_dokumen' => ['required', 'max:100'],
-            'tgl_dokumen' => ['required'],
-            // 'pphpasal_id' => ['required'],
+            'pph_id' => 'required|exists:pph_pasals,id', // Adjust this rule as needed for other PPH types
+            'pph_type' => 'required|string|in:pph_pasals,pph_non_residens,pph_setor_sendiris,impor_data_pphs', // List all possible types
+            'tahun_pajak' => 'required|integer|digits:4',
+            'masa_pajak' => 'required|in:januari,februari,maret,april,mei,juni,juli,agustus,september,oktober,november,desember',
+            'status' => 'nullable|string',
         ];
     }
 

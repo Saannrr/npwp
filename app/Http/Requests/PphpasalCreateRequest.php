@@ -27,19 +27,20 @@ class PphpasalCreateRequest extends FormRequest
     {
         return [
             'pengaturan_id' => ['required'],
+            'penandatangan_bukti_potong' => ['required', 'in:pengurus,kuasa'],
             'tahun_pajak' => ['required', 'max:4', 'min:4'],
-            'masa_pajak' => ['required'],
+            'masa_pajak' => ['required', 'in:januari,februari,maret,april,mei,juni,juli,agustus,september,oktober,november,desember'],
             'nama' => ['required', 'string', 'max:255'],
             'identitas' => ['required', 'in:npwp,nik'],
             'npwp_id' => ['required_if:identitas,npwp', 'max:15', 'min:15'],
             'nik_id' => ['required_if:identitas,nik', 'max:16', 'min:16'],
-            'dasar_pemotongan_id' => ['required'],
+            'dokumen_pph_pasal_id' => ['required', 'exists:dokumen_pph_pasals,id'],
             'kode_objek_pajak' => ['required'],
             'fasilitas_pajak_penghasilan' => ['required', 'in:tanpa fasilitas,surat keterangan bebas,pph ditanggung pemerintah,surat keterangan berdasarkan pp no 23 2018,fasilitas lainnya berdasarkan'],
             'no_fasilitas' => ['required_unless:fasilitas_pajak_penghasilan,tanpa fasilitas'],
-            'jumlah_penghasilan_bruto' => ['required'],
-            'tarif' => ['required'],
-            'jumlah_setor' => ['required'],
+            'jumlah_penghasilan_bruto' => ['required', 'integer'],
+            'tarif' => ['required', 'decimal:5,4'],
+            'jumlah_setor' => ['required', 'integer'],
             'kelebihan_pemotongan' => ['required', 'in:pengembalian,pemindahbukuan'],
             'status' => ['required']
         ];

@@ -27,14 +27,15 @@ class PphpasalUpdateRequest extends FormRequest
     {
         return [
             'tahun_pajak' => ['nullable', 'max:4', 'min:4'],
-            'masa_pajak' => ['nullable'],
-            'dasar_pemotongan_id' => ['nullable'],
+            'masa_pajak' => ['nullable', 'in:januari,februari,maret,april,mei,juni,juli,agustus,september,oktober,november,desember'],
+            'dokumen_pph_pasal_id' => ['nullable'],
             'kode_objek_pajak' => ['nullable'],
             'fasilitas_pajak_penghasilan' => ['nullable', 'in:tanpa fasilitas,surat keterangan bebas,pph ditanggung pemerintah,surat keterangan berdasarkan pp no 23 2018,fasilitas lainnya berdasarkan'],
             'no_fasilitas' =>  ['required_unless:fasilitas_pajak_pengbayaran,tanpa fasilitas'],
-            'jumlah_penghasilan_bruto' => ['nullable'],
-            'tarif' => ['nullable'],
-            'jumlah_setor' => ['nullable'],
+            'jumlah_penghasilan_bruto' => ['nullable', 'integer'],
+            'tarif' => ['nullable', 'decimal:5,4'],
+            'jumlah_setor' => ['nullable', 'integer'],
+            'penandatangan_bukti_potong' => ['nullable', 'in:pengurus,kuasa'],
             'kelebihan_pemotongan' => ['nullable', 'in:pengembalian,pemindahbukuan'],
             'status' => ['nullable']
         ];

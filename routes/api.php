@@ -53,4 +53,12 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
 
     //   dokumen pphpasal routes
     Route::get('/dokumen-pphpasal', [\App\Http\Controllers\DokumenPphpasalController::class, 'getAll']);
+    Route::post('/dokumen-pphpasal/create', [\App\Http\Controllers\DokumenPphpasalController::class, 'create']);
+    Route::delete('/dokumen-pphpasal/{id}', [\App\Http\Controllers\DokumenPphpasalController::class, 'destroy']);
+
+    //   posting pph routes
+    Route::get('/posting-pph', [\App\Http\Controllers\PostingPphController::class, 'getAll']);
+    Route::get('/cari-posting-pph', [\App\Http\Controllers\PostingPphController::class, 'cariPostingPph']);
+    Route::post('/posting-pph/create', [\App\Http\Controllers\PostingPphController::class, 'create']);
+    Route::delete('/posting-pph/{id}', [\App\Http\Controllers\PostingPphController::class, 'destroy']);
 });

@@ -4,27 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DokumenPphPasal extends Model
+class PostingPph extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'dokumen_pph_pasals';
+    protected $table = 'posting_pphs';
     protected $primaryKey = 'id';
     protected $keyType = "int";
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [
-        'nama_dokumen',
-        'no_dokumen',
-        'tgl_dokumen',
-        'pphpasal_id'
+        'pph_id',
+        'pph_type',
+        'tahun_pajak',
+        'masa_pajak',
+        'status',
     ];
 
-    public function pphpasal(): BelongsTo
+    // Define the relationship to PPH models
+    public function pph()
     {
-        return $this->belongsTo(PphPasal::class, 'pphpasal_id', 'id');
+        return $this->morphTo();
     }
 }
