@@ -39,10 +39,10 @@ class PphpasalCreateRequest extends FormRequest
             'fasilitas_pajak_penghasilan' => ['required', 'in:tanpa fasilitas,surat keterangan bebas,pph ditanggung pemerintah,surat keterangan berdasarkan pp no 23 2018,fasilitas lainnya berdasarkan'],
             'no_fasilitas' => ['required_unless:fasilitas_pajak_penghasilan,tanpa fasilitas'],
             'jumlah_penghasilan_bruto' => ['required', 'integer'],
-            'tarif' => ['required', 'decimal:5,4'],
-            'jumlah_setor' => ['required', 'integer'],
+            'tarif' => ['decimal:0,5'],
+            'jumlah_setor' => ['integer'],
             'kelebihan_pemotongan' => ['required', 'in:pengembalian,pemindahbukuan'],
-            'status' => ['required']
+            'status' => ['string']
         ];
     }
 

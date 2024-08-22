@@ -26,8 +26,8 @@ class PostingPphCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'pph_id' => 'required|exists:pph_pasals,id', // Adjust this rule as needed for other PPH types
-            'pph_type' => 'required|string|in:pph_pasals,pph_non_residens,pph_setor_sendiris,impor_data_pphs', // List all possible types
+            'pph_id' => 'exists:pph_pasals,id', // Adjust this rule as needed for other PPH types
+            'pph_type' => 'string|in:pph_pasals,pph_non_residens,pph_setor_sendiris,impor_data_pphs', // List all possible types
             'tahun_pajak' => 'required|integer|digits:4',
             'masa_pajak' => 'required|in:januari,februari,maret,april,mei,juni,juli,agustus,september,oktober,november,desember',
             'status' => 'nullable|string',

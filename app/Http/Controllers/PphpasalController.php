@@ -70,6 +70,7 @@ class PphpasalController extends Controller
         // Set nilai yang sudah dihitung ke dalam data yang akan disimpan
         $data['tarif'] = $tarif;
         $data['jumlah_setor'] = $jumlahSetor;
+        $data['status'] = 'Belum di post';
 
         $pphpasal = new PphPasal($data);
         $pphpasal->save();
