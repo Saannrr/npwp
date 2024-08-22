@@ -54,8 +54,14 @@ class UserController extends Controller
             ], 401));
         }
 
-        $user->token = Str::uuid()->toString();
-        $user->save();
+        // Check if the token has expired or does not exist
+        if (!$user->token || !$user->token_expires_at || $user->token_expires_at->isPast()) {
+            // Generate a new token
+            $user->token = Str::uuid()->toString();
+            // Set the token expiration date to 30 days from now
+            $user->token_expires_at = now()->addDays(30);
+            $user->save();
+        }
 
         return new UserResource($user);
     }
