@@ -16,20 +16,36 @@ class IdentitasController extends Controller
 
     public function cariIdentitas(Request $request)
     {
-        $noIdentitas = $request->input('no_identitas');
+        $nik = $request->input('nik');
         $nama = $request->input('nama');
 
         // Search for a matching record where both no_identitas and nama match
-        $identitas = IdentitasOrang::where(function ($query) use ($noIdentitas) {
-            $query->where('npwp', $noIdentitas)
-                ->orWhere('nik', $noIdentitas);
+        $identitasNik = IdentitasOrang::where(function ($query) use ($nik) {
+            $query->where('nik', $nik);
         })
             ->where('nama', $nama)
             ->first();
 
-        if ($identitas) {
+        if ($identitasNik) {
             return response()->json([
-                new IdentitasResource($identitas)
+                new IdentitasResource($identitasNik)
+            ]);
+        }
+
+        return response()->json([
+            'errors' => 'Identitas tidak ditemukan'
+        ], 404);
+    }
+
+    public function cariIdentitasByNpwp(Request $request)
+    {
+        $npwp = $request->input('npwp');
+
+        $identitasNpwp = IdentitasOrang::where('npwp', $npwp)->first();
+
+        if ($identitasNpwp) {
+            return response()->json([
+                new IdentitasResource($identitasNpwp)
             ]);
         }
 

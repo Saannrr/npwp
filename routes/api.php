@@ -30,6 +30,7 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     //   identitas routes
     Route::get('/identitas', [\App\Http\Controllers\IdentitasController::class, 'getAllIdentitas']);
     Route::get('/cari-identitas', [\App\Http\Controllers\IdentitasController::class, 'cariIdentitas']);
+    Route::get('/cari-identitas-by-npwp', [\App\Http\Controllers\IdentitasController::class, 'cariIdentitasByNpwp']);
 
     // identitas perusahaan routes
     Route::get('/identitas-perusahaan', [\App\Http\Controllers\IdentitasPerusahaanController::class, 'getAll']);
