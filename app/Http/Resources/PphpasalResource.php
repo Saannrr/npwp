@@ -16,14 +16,13 @@ class PphpasalResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'pengaturan_id' => $this->pengaturan_id,
             'tahun_pajak' => $this->tahun_pajak,
             'masa_pajak' => $this->masa_pajak,
             'nama' => $this->nama,
             'identitas' => $this->identitas,
             'npwp_id' => $this->npwp_id,
             'nik_id' => $this->nik_id,
-            'dasar_pemotongan_id' => $this->dasar_pemotongan_id,
+            'dokumen_pph_pasal_id' => $this->dokumen_pph_pasal_id,
             'kode_objek_pajak' => $this->kode_objek_pajak,
             'fasilitas_pajak_penghasilan' => $this->fasilitas_pajak_penghasilan,
             'no_fasilitas' => $this->no_fasilitas,
@@ -31,6 +30,8 @@ class PphpasalResource extends JsonResource
             'tarif' => $this->tarif,
             'jumlah_setor' => $this->jumlah_setor,
             'kelebihan_pemotongan' => $this->kelebihan_pemotongan,
+            'pengaturan_id' => $this->pengaturan_id,
+            'penandatangan_bukti_potong' => $this->penandatangan_bukti_potong,
             'status' => $this->status,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];

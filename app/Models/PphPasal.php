@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -47,9 +48,9 @@ class PphPasal extends Model
         return $this->belongsTo(Pengaturan::class, 'pengaturan_id', 'id');
     }
 
-    public function dokumen_pph_pasal(): HasOne
+    public function dokumen_pph_pasal(): BelongsToMany
     {
-        return $this->hasOne(DokumenPphPasal::class, 'pphpasal_id', 'id');
+        return $this->belongsToMany(DokumenPphPasal::class, 'pphpasal_id', 'id');
     }
 
     public function kode_objek_pajak(): BelongsTo
