@@ -34,7 +34,7 @@ class PphpasalCreateRequest extends FormRequest
             'identitas' => ['required', 'in:npwp,nik'],
             'npwp_id' => ['required_if:identitas,npwp', 'max:15', 'min:15'],
             'nik_id' => ['required_if:identitas,nik', 'max:16', 'min:16'],
-            'dokumen_pph_pasal_id' => ['required', 'exists:dokumen_pph_pasals,id'],
+            'dokumen_pph_pasal_id' => ['exists:dokumen_pph_pasals,id'],
             'kode_objek_pajak' => ['required'],
             'fasilitas_pajak_penghasilan' => ['required', 'in:tanpa fasilitas,surat keterangan bebas,pph ditanggung pemerintah,surat keterangan berdasarkan pp no 23 2018,fasilitas lainnya berdasarkan'],
             'no_fasilitas' => ['required_unless:fasilitas_pajak_penghasilan,tanpa fasilitas'],

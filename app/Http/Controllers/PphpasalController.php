@@ -30,7 +30,6 @@ class PphpasalController extends Controller
         $npwpExists = isset($data['npwp_id']) && IdentitasPerusahaan::where('npwp_perusahaan', $data['npwp_id'])->exists();
         $nikExists = isset($data['nik_id']) && IdentitasPerusahaan::where('nik_perusahaan', $data['nik_id'])->exists();
 
-        // Cek apakah NPWP atau NIK ada di tabel IdentitasPerusahaans
         if (!$npwpExists && !$nikExists) {
             throw new HttpResponseException(response()->json([
                 "errors" => [
@@ -40,12 +39,6 @@ class PphpasalController extends Controller
                 ]
             ], 400));
         }
-
-        // Ambil dokumen yang baru dibuat
-        $dokumen = DokumenPphPasal::findOrFail($data['dokumen_pph_pasal_id']);
-
-        // ambil id dokumen pph pasal id
-        $data['dokumen_pph_pasal_id'] = $dokumen->id;
 
         // Ambil tarif dari tabel objekpajak berdasarkan kode objek pajak
         $kodeObjekPajak = $data['kode_objek_pajak'];
@@ -61,7 +54,7 @@ class PphpasalController extends Controller
             ], 400));
         }
 
-        $tarif = $objekPajak->persen; // Asumsi tarif dalam bentuk desimal (misalnya 0.1 untuk 10%)
+        $tarif = $objekPajak->persen;
 
         // Hitung pemotongan
         $jumlahPenghasilanBruto = $data['jumlah_penghasilan_bruto'];
@@ -72,12 +65,30 @@ class PphpasalController extends Controller
         $data['jumlah_setor'] = $jumlahSetor;
         $data['status'] = 'Belum di post';
 
+        // Cari dokumen yang belum memiliki pphpasal_id (null)
+        $dokumen = DokumenPphPasal::whereNull('pphpasal_id')->first();
+
+        if (!$dokumen) {
+            return response()->json([
+                "errors" => [
+                    "message" => [
+                        "Tidak ada dasar pemotongan!"
+                    ]
+                ]
+            ], 400);
+        }
+
+        // Simpan data ke tabel pph_pasals
         $pphpasal = new PphPasal($data);
         $pphpasal->save();
 
         // Update dokumen dengan pphpasal_id yang baru dibuat
         $dokumen->pphpasal_id = $pphpasal->id;
         $dokumen->save();
+
+        // Update dokumen_pph_pasal_id di tabel pph_pasals setelah dokumen diupdate
+        $pphpasal->dokumen_pph_pasal_id = $dokumen->id;
+        $pphpasal->save();
 
         return (new PphpasalResource($pphpasal))->response()->setStatusCode(201);
     }
