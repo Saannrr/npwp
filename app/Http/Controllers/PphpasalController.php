@@ -77,6 +77,7 @@ class PphpasalController extends Controller
 
         // Simpan data ke tabel pph_pasals
         $pphpasal = new PphPasal($data);
+        $pphpasal->user_id = auth()->user()->id;
         $pphpasal->save();
 
         // Assign the first dokumen's ID to dokumen_pph_pasal_id in the pph_pasals table

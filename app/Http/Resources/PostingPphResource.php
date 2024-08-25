@@ -16,6 +16,7 @@ class PostingPphResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'pph_id' => $this->pph_id,
             'pph_type' => $this->pph_type,
             'tahun_pajak' => $this->tahun_pajak,

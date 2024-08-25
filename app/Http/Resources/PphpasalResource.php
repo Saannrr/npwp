@@ -15,8 +15,9 @@ class PphpasalResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nomor_bukti_pemotongan' => 2000000000 + $this->id,  // Menggabungkan 2000000000 dengan id
             'id' => $this->id,
+            'nomor_bukti_pemotongan' => 2000000000 + $this->id,  // Menggabungkan 2000000000 dengan id
+            'user_id' => $this->user_id,
             'tahun_pajak' => $this->tahun_pajak,
             'masa_pajak' => $this->masa_pajak,
             'nama' => $this->nama,

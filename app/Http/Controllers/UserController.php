@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRegisterRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Resources\UserResource;
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserRegisterRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
@@ -54,8 +55,11 @@ class UserController extends Controller
             ], 401));
         }
 
+        // Convert the token_expires_at to a Carbon instance if it exists
+        $tokenExpiresAt = $user->token_expires_at ? Carbon::parse($user->token_expires_at) : null;
+
         // Check if the token has expired or does not exist
-        if (!$user->token || !$user->token_expires_at || $user->token_expires_at->isPast()) {
+        if (!$user->token || !$tokenExpiresAt || $tokenExpiresAt->isPast()) {
             // Generate a new token
             $user->token = Str::uuid()->toString();
             // Set the token expiration date to 30 days from now

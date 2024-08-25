@@ -82,11 +82,13 @@ class PostingPphController extends Controller
             // Tentukan tipe pajak berdasarkan data yang ditemukan
             if ($pphPasal) {
                 $posting = new PostingPph();
+                $posting->user_id = auth()->user()->id;
                 $posting->pph()->associate($pphPasal);
                 $posting->tahun_pajak = $tahunPajak;
                 $posting->masa_pajak = $masaPajak;
                 $posting->status = 'Success';
                 $pphPasal->status = 'Sudah di posting';
+                $posting->kode_objek_pajak = $pphPasal->kode_objek_pajak;
                 $pphPasal->save();
                 $posting->save();
             } // elseif ($pphNonResiden) {
