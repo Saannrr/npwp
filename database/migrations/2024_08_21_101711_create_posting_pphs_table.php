@@ -11,29 +11,29 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('posting_pphs', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('pph_id');
-            $table->string('pph_type'); // Menyimpan tipe pajak
-            $table->year('tahun_pajak'); // Kolom tahun pajak
-            $table->enum('masa_pajak', ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember']); // Kolom masa pajak
-            $table->string('status')->default('pending');
-            $table->timestamps();
-            $table->softDeletes();
+    // public function up()
+    // {
+    //     Schema::create('posting_pphs', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->unsignedBigInteger('pph_id');
+    //         $table->string('pph_type'); // Menyimpan tipe pajak
+    //         $table->year('tahun_pajak'); // Kolom tahun pajak
+    //         $table->enum('masa_pajak', ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember']); // Kolom masa pajak
+    //         $table->string('status')->default('pending');
+    //         $table->timestamps();
+    //         $table->softDeletes();
 
-            $table->index(['pph_id', 'pph_type']); // Untuk mempermudah pencarian
-        });
-    }
+    //         $table->index(['pph_id', 'pph_type']); // Untuk mempermudah pencarian
+    //     });
+    // }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('posting_pphs');
-    }
+    // /**
+    //  * Reverse the migrations.
+    //  *
+    //  * @return void
+    //  */
+    // public function down()
+    // {
+    //     Schema::dropIfExists('posting_pphs');
+    // }
 };

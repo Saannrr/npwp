@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('dokumen_pph_pasals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->enum('nama_dokumen', ['faktur pajak', 'invoice', 'pengumuman', 'surat perjanjian', 'bukti pembayaran', 'akta perikatan', 'akta rups', 'surat pernyataan']);
             $table->string('no_dokumen');
             $table->date('tgl_dokumen');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pphpasal_id')->references('id')->on('pph_pasals');
         });
     }

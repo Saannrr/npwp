@@ -18,16 +18,20 @@ class User extends Model implements Authenticatable
     public $timestamps = true;
     public $incrementing = true;
     protected $fillable = [
-        'name',
         'email',
-        'npwp',
-        'nik',
         'password',
+        'passphrase',
+        'role',
     ];
 
     public function pengaturan(): HasMany
     {
         return $this->hasMany(Pengaturan::class, 'user_id', 'id');
+    }
+
+    public function profileable()
+    {
+        return $this->morphTo();
     }
 
     public function getAuthIdentifierName()

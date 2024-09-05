@@ -26,7 +26,7 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'npwp' => ['required', 'max:15'],
+            'npwp' => ['required', 'max:15', 'min:15'],
             'password' => ['required', 'max:100']
         ];
     }

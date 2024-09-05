@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nik_id', 16)->nullable()->unique('pengaturans_nik_id_unique');
             $table->string('nama_penandatangan');
             $table->unsignedBigInteger('user_id');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
 

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DasarPemotonganSeeder extends Seeder
+class PajakPenghasilanSeeder extends Seeder
 {
     /**
      * Run the database seeds.

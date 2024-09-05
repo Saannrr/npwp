@@ -16,10 +16,17 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
             'email' => $this->email,
-            'npwp' => $this->npwp,
-            'nik' => $this->nik,
+            'passphrase' => $this->passphrase,
+            'role' => $this->role,
+            'profile' => $this->whenLoaded('profileable', function () {
+                if ($this->profileable instanceof \App\Models\IdentitasOrang) {
+                    return new IdentitasResource($this->profileable);
+                } elseif ($this->profileable instanceof \App\Models\IdentitasPerusahaan) {
+                    return new IdentitasPerusahaanResource($this->profileable);
+                }
+                return null;
+            }),
             'token' => $this->whenNotNull($this->token)
         ];
     }

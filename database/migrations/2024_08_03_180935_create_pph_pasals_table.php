@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pph_pasals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pengaturan_id')->nullable(false);
             $table->enum('penandatangan_bukti_potong', ['pengurus', 'kuasa']);
             $table->year('tahun_pajak');
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pengaturan_id')->on('pengaturans')->references('id');
         });
     }

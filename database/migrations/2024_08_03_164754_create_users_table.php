@@ -15,14 +15,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->nullable(false);
             $table->string('email')->nullable(false)->unique('users_email_unique');
-            $table->string('npwp', 15)->nullable(false)->unique('users_npwp_unique');
-            $table->string('nik', 16)->nullable(false)->unique('users_nik_unique');
             $table->string('password')->nullable(false);
+            $table->string('passphrase')->nullable(false)->unique('users_passphrase');
+            $table->string('role', 100)->enum('company', 'individual')->default('individual')->nullable(false);
+            $table->unsignedBigInteger('profileable_id')->nullable(false);
+            $table->string('profileable_type', 100)->nullable(false);
             $table->string('token', 100)->nullable()->unique('users_token_unique');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['profileable_id', 'profileable_type']);
         });
     }
 

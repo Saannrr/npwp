@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class IdentitasPerusahaan extends Model
 {
-    use HasFactory;
+    protected $table = 'identitas_perusahaans';
+    protected $primaryKey = 'id';
+    protected $keyType = "int";
+    public $timestamps = true;
+    public $incrementing = true;
+
+    public function user()
+    {
+        return $this->morphOne(User::class, 'profileable');
+    }
 }

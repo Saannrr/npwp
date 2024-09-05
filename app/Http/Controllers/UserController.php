@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\IdentitasOrang;
 use Illuminate\Http\JsonResponse;
+use App\Models\IdentitasPerusahaan;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,12 +19,13 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
+    // Note: regis belom di fix setelah pake polymorphic relations
     public function register(UserRegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
 
         // Validasi manual untuk NPWP dan NIK
-        $npwpExists = User::where('npwp', $data['npwp'])->count() == 1;
+        $npwpExists = IdentitasOrang::where('npwp', $data['npwp'])->count() == 1;
         $nikExists = User::where('nik', $data['nik'])->count() == 1;
         if ($npwpExists || $nikExists) {
             throw new HttpResponseException(response([
@@ -44,7 +47,20 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::where('npwp', $data['npwp'])->first();
+        // Cari NPWP di tabel identitas orang atau perusahaan
+        $identitasOrang = IdentitasOrang::where('npwp', $data['npwp'])->first();
+        $identitasPerusahaan = IdentitasPerusahaan::where('npwp_perusahaan', $data['npwp'])->first();
+
+        // Jika ditemukan di salah satu tabel, cari user yang terhubung
+        if ($identitasOrang) {
+            $user = $identitasOrang->user;
+        } elseif ($identitasPerusahaan) {
+            $user = $identitasPerusahaan->user;
+        } else {
+            $user = null;
+        }
+
+        // Cek apakah user ditemukan dan password benar
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw new HttpResponseException(response([
                 "errors" => [
@@ -55,25 +71,28 @@ class UserController extends Controller
             ], 401));
         }
 
-        // Convert the token_expires_at to a Carbon instance if it exists
+        // Konversi token_expires_at ke instance Carbon jika ada
         $tokenExpiresAt = $user->token_expires_at ? Carbon::parse($user->token_expires_at) : null;
 
-        // Check if the token has expired or does not exist
+        // Cek apakah token sudah kadaluarsa atau tidak ada
         if (!$user->token || !$tokenExpiresAt || $tokenExpiresAt->isPast()) {
-            // Generate a new token
+            // Generate token baru
             $user->token = Str::uuid()->toString();
-            // Set the token expiration date to 30 days from now
+            // Set tanggal kadaluarsa token 30 hari dari sekarang
             $user->token_expires_at = now()->addDays(30);
             $user->save();
         }
 
-        return new UserResource($user);
+        return new UserResource($user->load('profileable'));
     }
 
-    public function getUser(Request $request): UserResource
+    /**
+     * @return \App\Models\User
+     */
+    public function getUser()
     {
         $user = Auth::user();
-        return new UserResource($user);
+        return new UserResource($user->load('profileable'));
     }
 
     public function update(UserUpdateRequest $request): UserResource
@@ -91,7 +110,7 @@ class UserController extends Controller
 
         /** @var \App\Models\User $user **/
         $user->save();
-        return new UserResource($user);
+        return new UserResource($user->load('profileable'));
     }
 
     public function logout(Request $request): JsonResponse

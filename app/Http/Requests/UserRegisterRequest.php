@@ -26,11 +26,9 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:100'],
             'email' => ['required', 'email', 'max:100'],
-            'npwp' => ['required', 'max:15', 'min:15'],
-            'nik' => ['required', 'max:16', 'min:16'],
             'password' => ['required', 'max:100'],
+            'role' => ['required', 'in:company,individual'],
         ];
     }
 

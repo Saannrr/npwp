@@ -17,6 +17,7 @@ class IdentitasPerusahaanSeeder extends Seeder
     {
         DB::table('identitas_perusahaans')->insert([
             [
+                'id' => 1,
                 'nama_perusahaan' => 'PT. ABC Sejahtera',
                 'npwp_perusahaan' => '123456789012345',
                 'nik_perusahaan' => '987654321098765',
@@ -26,6 +27,7 @@ class IdentitasPerusahaanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 2,
                 'nama_perusahaan' => 'CV. XYZ Makmur',
                 'npwp_perusahaan' => '234567890123456',
                 'nik_perusahaan' => '876543210987654',
@@ -35,6 +37,7 @@ class IdentitasPerusahaanSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 3,
                 'nama_perusahaan' => 'PT. MNO Sukses',
                 'npwp_perusahaan' => '345678901234567',
                 'nik_perusahaan' => '765432109876543',
