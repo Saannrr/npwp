@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DokumenPphpasalCreateRequest;
 use Illuminate\Http\Request;
-use App\Models\DokumenPphPasal;
-use App\Http\Resources\DokumenPphpasalResource;
 use App\Models\DasarPemotongan;
+use App\Models\DokumenPphPasal;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\DokumenPphpasalResource;
+use App\Http\Requests\DokumenPphpasalCreateRequest;
 
 class DokumenPphpasalController extends Controller
 {
@@ -28,6 +29,8 @@ class DokumenPphpasalController extends Controller
             'tgl_dokumen' => $data['tgl_dokumen'],
             // pphpasal_id akan diisi setelah pph pasal dibuat
         ]);
+
+        $dokumen->user_id = Auth::user()->id;
         $dokumen->save();
 
         return response()->json(new DokumenPphpasalResource($dokumen), 201);

@@ -57,9 +57,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::post('/dokumen-pphpasal/create', [\App\Http\Controllers\DokumenPphpasalController::class, 'create']);
     Route::delete('/dokumen-pphpasal/{id}', [\App\Http\Controllers\DokumenPphpasalController::class, 'destroy']);
 
-    //   posting pph routes
-    Route::get('/posting-pph', [\App\Http\Controllers\PostingPphController::class, 'getAll']);
-    Route::get('/cari-posting-pph', [\App\Http\Controllers\PostingPphController::class, 'cariPostingPph']);
-    Route::post('/posting-pph/create', [\App\Http\Controllers\PostingPphController::class, 'create']);
-    Route::delete('/posting-pph/{id}', [\App\Http\Controllers\PostingPphController::class, 'destroy']);
+    //   Pajak Penghasilan (posting pph routes)
+    Route::get('/pajak-penghasilan', [\App\Http\Controllers\PajakPenghasilanController::class, 'getAll']);
+    Route::get('/cari-pajak-penghasilan', [\App\Http\Controllers\PajakPenghasilanController::class, 'cariPajakPenghasilan']);
+    Route::post('/posting-pph/create', [\App\Http\Controllers\PajakPenghasilanController::class, 'postPajakPenghasilan']);
+    Route::delete('/pajak-penghasilan/{id}', [\App\Http\Controllers\PajakPenghasilanController::class, 'destroy']);
 });

@@ -12,6 +12,7 @@ use App\Models\IdentitasPerusahaan;
 use App\Http\Resources\PphpasalResource;
 use App\Http\Requests\PphpasalCreateRequest;
 use App\Http\Requests\PphpasalUpdateRequest;
+use App\Models\PajakPenghasilan;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PphpasalController extends Controller
@@ -73,25 +74,42 @@ class PphpasalController extends Controller
             ], 400);
         }
 
-        // **All validations passed, now proceed with saving the data**
+        DB::beginTransaction();
+        try {
+            // Simpan data ke tabel pph_pasals
+            $pphpasal = new PphPasal($data);
+            $pphpasal->user_id = auth()->user()->id;
+            $pphpasal->save();
 
-        // Simpan data ke tabel pph_pasals
-        $pphpasal = new PphPasal($data);
-        $pphpasal->user_id = auth()->user()->id;
-        $pphpasal->save();
+            // Simpan referensi pph_pasals ke pajak_penghasilans
+            $pajakPenghasilan = new PajakPenghasilan();
+            $pajakPenghasilan->pphpasal_id = $pphpasal->id;
+            // $pajakPenghasilan->user_id = auth()->user()->id;
+            $pajakPenghasilan->tipe_pph = 'pph pasal';
+            $pajakPenghasilan->save();
 
-        // Assign the first dokumen's ID to dokumen_pph_pasal_id in the pph_pasals table
-        $firstDokumen = $dokumens->first();
-        $pphpasal->dokumen_pph_pasal_id = $firstDokumen->id;
-        $pphpasal->save();
+            // Assign dokumen's ID to dokumen_pph_pasal_id in the pph_pasals table
+            $firstDokumen = $dokumens->first();
+            $pphpasal->dokumen_pph_pasal_id = $firstDokumen->id;
+            $pphpasal->save();
 
-        // Update semua dokumen yang belum memiliki pphpasal_id
-        foreach ($dokumens as $dokumen) {
-            $dokumen->pphpasal_id = $pphpasal->id;
-            $dokumen->save();
+            // Update semua dokumen yang belum memiliki pphpasal_id
+            foreach ($dokumens as $dokumen) {
+                $dokumen->pphpasal_id = $pphpasal->id;
+                $dokumen->save();
+            }
+
+            DB::commit();
+
+            return (new PphpasalResource($pphpasal))->response()->setStatusCode(201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                "errors" => [
+                    "message" => "Terjadi kesalahan saat menyimpan data: " . $e->getMessage()
+                ]
+            ], 500);
         }
-
-        return (new PphpasalResource($pphpasal))->response()->setStatusCode(201);
     }
 
     public function update(PphpasalUpdateRequest $request, $id): JsonResponse

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('nama_dokumen', ['faktur pajak', 'invoice', 'pengumuman', 'surat perjanjian', 'bukti pembayaran', 'akta perikatan', 'akta rups', 'surat pernyataan']);
             $table->string('no_dokumen');
             $table->date('tgl_dokumen');
-            $table->unsignedBigInteger('pphpasal_id');
+            $table->unsignedBigInteger('pphpasal_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

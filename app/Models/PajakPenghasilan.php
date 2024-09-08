@@ -7,5 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class PajakPenghasilan extends Model
 {
-    use HasFactory;
+    protected $table = 'pajak_penghasilans';
+    protected $primaryKey = 'id';
+    protected $keyType = "int";
+    public $timestamps = true;
+    public $incrementing = true;
+    public $fillable = [
+        'is_posted',
+        'posting_date',
+        'tipe_pph',
+        'pphpasal_id',
+    ];
+
+    public function pphpasal()
+    {
+        return $this->belongsTo(PphPasal::class, 'pphpasal_id', 'id');
+    }
 }

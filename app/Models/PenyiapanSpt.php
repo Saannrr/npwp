@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PerekamanBp extends Model
+class PenyiapanSpt extends Model
 {
-    protected $table = 'perekaman_bps';
+    protected $table = 'penyiapan_spts';
     protected $primaryKey = 'id';
     protected $keyType = "int";
     public $timestamps = true;
@@ -16,12 +16,13 @@ class PerekamanBp extends Model
         'user_id',
         'tahun_pajak',
         'masa_pajak',
-        'pajak_penghasilan_id',
-        'jenis_pajak',
-        'jenis_setoran',
-        'pph_yang_dipotong',
-        'id_billing',
-        'pph_yang_disetor',
-        'selisih',
+        'pbtl_ke',
+        'jumlah_pph_kurang_setor',
+        'status_spt',
+        'keterangan_spt',
+        'bertindak_sebagai',
+        'pengaturan_id',
+        'lampiran_doss_id',
+        'lampiran_dopp_id',
     ];
 }

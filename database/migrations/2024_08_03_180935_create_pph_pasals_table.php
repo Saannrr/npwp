@@ -22,9 +22,9 @@ return new class extends Migration
             $table->enum('masa_pajak', ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus', 'september', 'oktober', 'november', 'desember']);
             $table->string('nama');
             $table->enum('identitas', ['npwp', 'nik'])->nullable(false);
-            $table->string('npwp_id', 15)->nullable()->unique('pph_pasals_npwp_id_unique');
-            $table->string('nik_id', 16)->nullable()->unique('pph_pasals_nik_id_unique');
-            $table->unsignedBigInteger('dokumen_pph_pasal_id');
+            $table->string('npwp_id', 15)->nullable();
+            $table->string('nik_id', 16)->nullable();
+            $table->unsignedBigInteger('dokumen_pph_pasal_id')->nullable();
             $table->string('kode_objek_pajak');
             $table->enum('fasilitas_pajak_penghasilan', ['tanpa fasilitas', 'surat keterangan bebas', 'pph ditanggung pemerintah', 'surat keterangan berdasarkan pp no 23 2018', 'fasilitas lainnya berdasarkan'])->nullable(false);
             $table->string('no_fasilitas')->nullable();
