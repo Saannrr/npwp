@@ -13,7 +13,7 @@ class PembayaranSptCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user() != null;
     }
 
     /**
@@ -24,7 +24,11 @@ class PembayaranSptCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kode_billing' => ['required', 'string', 'max:255'],
+            'jumlah_setor' => ['required', 'numeric'],
+            'nama_bank' => ['required', 'string', 'max:255'],
+            'npwp_penyetor' => ['required', 'string', 'max:255'],
+            'alamat' => ['required', 'string', 'max:255'],
         ];
     }
 }

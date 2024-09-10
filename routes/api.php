@@ -67,4 +67,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::get('/perekaman-bp', [\App\Http\Controllers\PerekamanBpController::class, 'getAll']);
     Route::get('/cari-perekaman-bp', [\App\Http\Controllers\PerekamanBpController::class, 'cariPerekamanBp']);
     Route::post('/generate-id-billing/{id}', [\App\Http\Controllers\PerekamanBpController::class, 'generateIdBilling']);
+
+    // Pembayaran Spt
+    Route::get('/pembayaran-spt', [\App\Http\Controllers\PembayaranSptController::class, 'getAll']);
+    Route::post('/pembayaran-spt/create', [\App\Http\Controllers\PembayaranSptController::class, 'create']);
+    Route::delete('/pembayaran-spt/{id}', [\App\Http\Controllers\PembayaranSptController::class, 'destroy']);
 });

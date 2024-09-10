@@ -29,7 +29,7 @@ return new class extends Migration
             $table->year('tahun_pajak');
             $table->string('nop');
             $table->string('nomor_ketetapan');
-            $table->string('uraian');
+            $table->string('uraian')->nullable();
             $table->string('nama_bank');
             $table->string('nomor_transaksi_bank');
             $table->string('npwp_penyetor', 15);
