@@ -13,7 +13,7 @@ class RekamSptBpCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return $this->user() != null;
     }
 
     /**
@@ -24,7 +24,12 @@ class RekamSptBpCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'jenis_bukti_penyetoran' => ['required', 'in:surat setoran pajak,pemindahbukuan'],
+            'npwp_id' => ['required', 'min:15', 'max:15'],
+            'ntpn_id' => ['required_if:jenis_bukti_penyetoran,surat setoran pajak', 'min:16', 'max:16'],
+            'nomor_pemindahbukuan' => ['required_if:jenis_bukti_penyetoran,pemindahbukuan'],
+            'tahun_pajak' => ['required', 'min:4', 'max:4'],
+            'beda_npwp_id' => ['nullable', 'boolean'],
         ];
     }
 }

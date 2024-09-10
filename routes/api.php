@@ -72,4 +72,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::get('/pembayaran-spt', [\App\Http\Controllers\PembayaranSptController::class, 'getAll']);
     Route::post('/pembayaran-spt/create', [\App\Http\Controllers\PembayaranSptController::class, 'create']);
     Route::delete('/pembayaran-spt/{id}', [\App\Http\Controllers\PembayaranSptController::class, 'destroy']);
+
+    // Rekam SPT BP
+    Route::get('/rekam-spt-bp', [\App\Http\Controllers\RekamSptBpController::class, 'getAll']);
+    Route::post('/rekam-spt-bp/create', [\App\Http\Controllers\RekamSptBpController::class, 'create']);
+    Route::delete('/rekam-spt-bp/{id}', [\App\Http\Controllers\RekamSptBpController::class, 'destroy']);
 });

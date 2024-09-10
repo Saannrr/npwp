@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RekamSptBp extends Model
 {
-    protected $table = 'pembayaran_spts';
+    protected $table = 'rekam_spt_bps';
     protected $primaryKey = 'id';
     protected $keyType = "int";
     public $timestamps = true;
