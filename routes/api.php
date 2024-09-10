@@ -60,6 +60,11 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     //   Pajak Penghasilan (posting pph routes)
     Route::get('/pajak-penghasilan', [\App\Http\Controllers\PajakPenghasilanController::class, 'getAll']);
     Route::get('/cari-pajak-penghasilan', [\App\Http\Controllers\PajakPenghasilanController::class, 'cariPajakPenghasilan']);
-    Route::post('/posting-pph/create', [\App\Http\Controllers\PajakPenghasilanController::class, 'postPajakPenghasilan']);
+    Route::post('/posting-pph', [\App\Http\Controllers\PajakPenghasilanController::class, 'postPajakPenghasilan']);
     Route::delete('/pajak-penghasilan/{id}', [\App\Http\Controllers\PajakPenghasilanController::class, 'destroy']);
+
+    // Perekaman BP
+    Route::get('/perekaman-bp', [\App\Http\Controllers\PerekamanBpController::class, 'getAll']);
+    Route::get('/cari-perekaman-bp', [\App\Http\Controllers\PerekamanBpController::class, 'cariPerekamanBp']);
+    Route::post('/generate-id-billing/{id}', [\App\Http\Controllers\PerekamanBpController::class, 'generateIdBilling']);
 });
