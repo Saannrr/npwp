@@ -110,6 +110,8 @@ class PajakPenghasilanController extends Controller
                     'jenis_pajak' => $jenisPajak, // Insert combined kode_pajak + kode_objek_pajak here
                     'jenis_setoran' => $jenisSetoran, // Insert the middle part of kode_objek_pajak here
                     'pph_yang_dipotong' => $pphPasal->jumlah_setor, // Insert jumlah_setor from pph_pasals here
+                    'pph_yang_disetor' => 0,
+                    'selisih' => $pphPasal->jumlah_setor
                     // Add other necessary fields
                 ]);
 
