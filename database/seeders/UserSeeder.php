@@ -26,8 +26,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('aguswijaya'),
                 'passphrase' => Str::random(7),
                 'role' => 'individual',
-                'profileable_id' => 1,
-                'profileable_type' => 'App\Models\IdentitasOrang',
+                'nama' => 'Agus Wijaya',
+                'nip' => '197804150001',
+                'jabatan' => 'Manager Keuangan',
+                'npwp' => '012345678901234',
+                'nik' => '3201234567890123',
+                'alamat' => 'Jl. Merdeka No. 1, Jakarta',
+                'kategori_perusahaan' => null, // null for individuals
                 'created_at' => now(),
             ],
             [
@@ -35,8 +40,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('budi'),
                 'passphrase' => Str::random(7),
                 'role' => 'individual',
-                'profileable_id' => 2,
-                'profileable_type' => 'App\Models\IdentitasOrang',
+                'nama' => 'Budi Santoso',
+                'nip' => '198512230002',
+                'jabatan' => 'Supervisor HRD',
+                'npwp' => '112345678901234',
+                'nik' => '3201234567890124',
+                'alamat' => 'Jl. Sudirman No. 2, Jakarta',
+                'kategori_perusahaan' => null, // null for individuals
                 'created_at' => now(),
             ],
             [
@@ -44,71 +54,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('citra'),
                 'passphrase' => Str::random(7),
                 'role' => 'individual',
-                'profileable_id' => 3,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'dian@gmail.com',
-                'password' => Hash::make('dian'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 4,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'eka@gmail.com',
-                'password' => Hash::make('eka'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 5,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'fajar@gmail.com',
-                'password' => Hash::make('fajar'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 6,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'gita@gmail.com',
-                'password' => Hash::make('gita'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 7,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'hana@gmail.com',
-                'password' => Hash::make('hana'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 8,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'iqbal@gmail.com',
-                'password' => Hash::make('iqbal'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 9,
-                'profileable_type' => 'App\Models\IdentitasOrang',
-                'created_at' => now(),
-            ],
-            [
-                'email' => 'joko@gmail.com',
-                'password' => Hash::make('joko'),
-                'passphrase' => Str::random(7),
-                'role' => 'individual',
-                'profileable_id' => 10,
-                'profileable_type' => 'App\Models\IdentitasOrang',
+                'nama' => 'Citra Wijaya',
+                'nip' => '199006150003',
+                'jabatan' => 'Staf Administrasi',
+                'npwp' => '212345678901234',
+                'nik' => '3201234567890125',
+                'alamat' => 'Jl. Thamrin No. 3, Jakarta',
+                'kategori_perusahaan' => null, // null for individuals
                 'created_at' => now(),
             ],
             // identitas perusahaan
@@ -117,8 +69,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('abcsejahtera'),
                 'passphrase' => Str::random(7),
                 'role' => 'company',
-                'profileable_id' => 1,
-                'profileable_type' => 'App\Models\IdentitasPerusahaan',
+                'nama' => 'PT. ABC Sejahtera',
+                'kategori_perusahaan' => 'Jasa Keuangan', // value for company
+                'npwp' => '123456789012345',
+                'nik' => null, // null for company
+                'alamat' => 'Jl. Jend. Sudirman No. 1, Jakarta',
+                'nip' => null, // null for company
+                'jabatan' => null, // null for company
                 'created_at' => now(),
             ],
             [
@@ -126,8 +83,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('xyzmakmur'),
                 'passphrase' => Str::random(7),
                 'role' => 'company',
-                'profileable_id' => 2,
-                'profileable_type' => 'App\Models\IdentitasPerusahaan',
+                'nama' => 'CV. XYZ Makmur',
+                'kategori_perusahaan' => 'Perdagangan', // value for company
+                'npwp' => '234567890123456',
+                'nik' => null, // null for company
+                'alamat' => 'Jl. MH Thamrin No. 2, Jakarta',
+                'nip' => null, // null for company
+                'jabatan' => null, // null for company
                 'created_at' => now(),
             ],
             [
@@ -135,8 +97,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('mnosukses'),
                 'passphrase' => Str::random(7),
                 'role' => 'company',
-                'profileable_id' => 3,
-                'profileable_type' => 'App\Models\IdentitasPerusahaan',
+                'nama' => 'PT. MNO Sukses',
+                'kategori_perusahaan' => 'Manufaktur', // value for company
+                'npwp' => '345678901234567',
+                'nik' => null, // null for company
+                'alamat' => 'Jl. Gatot Subroto No. 3, Jakarta',
+                'nip' => null, // null for company
+                'jabatan' => null, // null for company
                 'created_at' => now(),
             ]
         ]);

@@ -119,6 +119,10 @@ class PajakPenghasilanController extends Controller
                 $pajakPenghasilan->is_posted = 1;
                 $pajakPenghasilan->posting_date = now();
                 $pajakPenghasilan->save();
+
+                // **Update the status in pph_pasals to 'sudah di post'**
+                $pphPasal->status = 'sudah di post';
+                $pphPasal->save(); // Save the updated status in the pph_pasals table
             }
 
             // Insert into penyiapan_spts

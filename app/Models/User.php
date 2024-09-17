@@ -22,16 +22,18 @@ class User extends Model implements Authenticatable
         'password',
         'passphrase',
         'role',
+        'nama',
+        'nip',
+        'jabatan',
+        'kategori_perusahaan',
+        'npwp',
+        'nik',
+        'alamat',
     ];
 
-    public function pengaturan(): HasMany
+    public function pengaturan()
     {
-        return $this->hasMany(Pengaturan::class, 'user_id', 'id');
-    }
-
-    public function profileable()
-    {
-        return $this->morphTo();
+        return $this->hasOne(Pengaturan::class, 'user_id', 'id');
     }
 
     public function getAuthIdentifierName()

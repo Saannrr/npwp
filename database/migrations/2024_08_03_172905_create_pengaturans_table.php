@@ -27,6 +27,8 @@ return new class extends Migration
 
             // Menambahkan foreign key
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('npwp_id')->references('npwp')->on('users');
+            $table->foreign('nik_id')->references('nik')->on('users');
         });
     }
 

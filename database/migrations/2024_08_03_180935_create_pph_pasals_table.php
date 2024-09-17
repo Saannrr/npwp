@@ -36,6 +36,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('npwp_id')->references('npwp')->on('users');
+            $table->foreign('nik_id')->references('nik')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pengaturan_id')->on('pengaturans')->references('id');
         });

@@ -17,19 +17,41 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PphpasalController extends Controller
 {
+    /**
+     * Retrieve all PphPasal records.
+     */
     public function getAll()
     {
         $pphpasal = PphPasal::all();
         return PphpasalResource::collection($pphpasal);
     }
 
+    public function getPphpasalById($id)
+    {
+        // Cari PphPasal berdasarkan ID
+        $pphPasal = PphPasal::find($id);
+
+        // Jika tidak ditemukan, kembalikan response 404
+        if (!$pphPasal) {
+            return response()->json([
+                'errors' => 'Pph Pasal tidak ditemukan'
+            ], 404);
+        }
+
+        // Jika ditemukan, kembalikan data menggunakan resource
+        return new PphpasalResource($pphPasal);
+    }
+
+    /**
+     * Create a new PphPasal record.
+     */
     public function create(PphpasalCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        // Validasi manual untuk NPWP dan NIK
-        $npwpExists = isset($data['npwp_id']) && IdentitasPerusahaan::where('npwp_perusahaan', $data['npwp_id'])->exists();
-        $nikExists = isset($data['nik_id']) && IdentitasPerusahaan::where('nik_perusahaan', $data['nik_id'])->exists();
+        // Validasi manual untuk NPWP dan NIK di tabel users
+        $npwpExists = isset($data['npwp_id']) && DB::table('users')->where('npwp', $data['npwp_id'])->exists();
+        $nikExists = isset($data['nik_id']) && DB::table('users')->where('nik', $data['nik_id'])->exists();
 
         if (!$npwpExists && !$nikExists) {
             return response()->json([
@@ -65,7 +87,6 @@ class PphpasalController extends Controller
         // Cari dokumen yang belum memiliki pphpasal_id (null)
         $dokumens = DokumenPphPasal::whereNull('pphpasal_id')->get();
 
-        // Periksa apakah tidak ada dokumen yang ditemukan
         if ($dokumens->isEmpty()) {
             return response()->json([
                 "errors" => [
@@ -84,7 +105,6 @@ class PphpasalController extends Controller
             // Simpan referensi pph_pasals ke pajak_penghasilans
             $pajakPenghasilan = new PajakPenghasilan();
             $pajakPenghasilan->pphpasal_id = $pphpasal->id;
-            // $pajakPenghasilan->user_id = auth()->user()->id;
             $pajakPenghasilan->tipe_pph = 'pph pasal';
             $pajakPenghasilan->save();
 
@@ -112,6 +132,9 @@ class PphpasalController extends Controller
         }
     }
 
+    /**
+     * Update an existing PphPasal record.
+     */
     public function update(PphpasalUpdateRequest $request, $id): JsonResponse
     {
         // Temukan PphPasal berdasarkan id
@@ -123,7 +146,7 @@ class PphpasalController extends Controller
         // Jika identitas diubah menjadi 'nik', pastikan nik_id disertakan dan valid
         if (isset($data['identitas']) && $data['identitas'] === 'nik') {
             if (isset($data['nik_id'])) {
-                $nikExists = IdentitasPerusahaan::where('nik_perusahaan', $data['nik_id'])->exists();
+                $nikExists = DB::table('users')->where('nik', $data['nik_id'])->exists();
                 if (!$nikExists) {
                     return response()->json([
                         "errors" => [
@@ -145,7 +168,7 @@ class PphpasalController extends Controller
         // Jika identitas diubah menjadi 'npwp', pastikan npwp_id disertakan dan valid
         if (isset($data['identitas']) && $data['identitas'] === 'npwp') {
             if (isset($data['npwp_id'])) {
-                $npwpExists = IdentitasPerusahaan::where('npwp_perusahaan', $data['npwp_id'])->exists();
+                $npwpExists = DB::table('users')->where('npwp', $data['npwp_id'])->exists();
                 if (!$npwpExists) {
                     return response()->json([
                         "errors" => [
@@ -215,6 +238,9 @@ class PphpasalController extends Controller
         return (new PphpasalResource($pphpasal))->response()->setStatusCode(200);
     }
 
+    /**
+     * Delete a PphPasal record.
+     */
     public function destroy($id): JsonResponse
     {
         $pphpasal = PphPasal::findOrFail($id);

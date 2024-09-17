@@ -38,12 +38,12 @@ class PphPasal extends Model
         'status',
     ];
 
-    public function identitas_perusahaan_yang_dipotong(): BelongsTo
+    public function identitas()
     {
-        return $this->belongsTo(IdentitasPerusahaan::class, 'nik_id', 'nik_perusahaan')->orWhere('npwp_id', 'npwp_perusahaan');
+        return $this->belongsTo(User::class, 'nik_id', 'nik')->orWhere('npwp_id', 'npwp');
     }
 
-    public function pengaturan(): BelongsTo
+    public function pengaturan()
     {
         return $this->belongsTo(Pengaturan::class, 'pengaturan_id', 'id');
     }

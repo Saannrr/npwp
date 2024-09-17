@@ -15,17 +15,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->nullable(false)->unique('users_email_unique');
-            $table->string('password')->nullable(false);
-            $table->string('passphrase')->nullable(false)->unique('users_passphrase');
-            $table->string('role', 100)->enum('company', 'individual')->default('individual')->nullable(false);
-            $table->unsignedBigInteger('profileable_id')->nullable(false);
-            $table->string('profileable_type', 100)->nullable(false);
-            $table->string('token', 100)->nullable()->unique('users_token_unique');
+            $table->string('email')->unique(); // Unik otomatis
+            $table->string('password');
+            $table->string('passphrase')->unique(); // Tidak perlu memberi nama indeks unik
+            $table->enum('role', ['company', 'individual'])->default('individual'); // Menggunakan enum yang valid
+            $table->string('token', 100)->nullable()->unique(); // Token bisa nullable dan unik
+            $table->string('nama');
+            $table->string('nip')->nullable(); // NIP hanya untuk individu
+            $table->string('jabatan')->nullable(); // Jabatan untuk individu
+            $table->string('kategori_perusahaan')->nullable(); // Hanya untuk perusahaan
+            $table->string('npwp', 15)->unique(); // NPWP unik dengan panjang 15 karakter
+            $table->string('nik', 16)->nullable()->unique(); // NIK hanya untuk individu dan bisa nullable
+            $table->text('alamat'); // Alamat tidak nullable
             $table->timestamps();
-            $table->softDeletes();
-
-            $table->index(['profileable_id', 'profileable_type']);
+            $table->softDeletes(); // Soft delete (kolom deleted_at)
         });
     }
 

@@ -47,6 +47,7 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::post('/pphpasal/create', [\App\Http\Controllers\PphpasalController::class, 'create']);
     Route::put('/pphpasal/{id}', [\App\Http\Controllers\PphpasalController::class, 'update']);
     Route::delete('/pphpasal/{id}', [\App\Http\Controllers\PphpasalController::class, 'destroy']);
+    Route::get('/pphpasal/{id}', [\App\Http\Controllers\PphpasalController::class, 'getPphpasalById']);
 
     //   objekpajak routes
     Route::get('/objekpajak', [\App\Http\Controllers\ObjekpajakController::class, 'getAll']);
@@ -77,4 +78,9 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::get('/rekam-spt-bp', [\App\Http\Controllers\RekamSptBpController::class, 'getAll']);
     Route::post('/rekam-spt-bp/create', [\App\Http\Controllers\RekamSptBpController::class, 'create']);
     Route::delete('/rekam-spt-bp/{id}', [\App\Http\Controllers\RekamSptBpController::class, 'destroy']);
+
+    // Penyiapan SPT
+    Route::get('/penyiapan-spt', [\App\Http\Controllers\PenyiapanSptController::class, 'getAll']);
+    Route::post('/penyiapan-spt/simpan-doss-dopp', [\App\Http\Controllers\PenyiapanSptController::class, 'simpan_doss_dopp']);
+    Route::post('/penyiapan-spt/lengkapi-spt', [\App\Http\Controllers\PenyiapanSptController::class, 'lengkapiSpt']);
 });

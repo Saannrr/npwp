@@ -19,14 +19,17 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserController extends Controller
 {
-    // Note: regis belom di fix setelah pake polymorphic relations
+    /**
+     * Register a new user.
+     */
     public function register(UserRegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        // Validasi manual untuk NPWP dan NIK
-        $npwpExists = IdentitasOrang::where('npwp', $data['npwp'])->count() == 1;
-        $nikExists = User::where('nik', $data['nik'])->count() == 1;
+        // Validasi manual untuk NPWP dan NIK langsung di tabel users
+        $npwpExists = User::where('npwp', $data['npwp'])->exists();
+        $nikExists = User::where('nik', $data['nik'])->exists();
+
         if ($npwpExists || $nikExists) {
             throw new HttpResponseException(response([
                 "errors" => [
@@ -37,28 +40,24 @@ class UserController extends Controller
             ], 400));
         }
 
+        // Buat user baru
         $user = new User($data);
+        $user->passphrase = Str::random(7);
         $user->password = Hash::make($data['password']);
         $user->save();
 
         return (new UserResource($user))->response()->setStatusCode(201);
     }
+
+    /**
+     * Log in a user.
+     */
     public function login(UserLoginRequest $request): UserResource
     {
         $data = $request->validated();
 
-        // Cari NPWP di tabel identitas orang atau perusahaan
-        $identitasOrang = IdentitasOrang::where('npwp', $data['npwp'])->first();
-        $identitasPerusahaan = IdentitasPerusahaan::where('npwp_perusahaan', $data['npwp'])->first();
-
-        // Jika ditemukan di salah satu tabel, cari user yang terhubung
-        if ($identitasOrang) {
-            $user = $identitasOrang->user;
-        } elseif ($identitasPerusahaan) {
-            $user = $identitasPerusahaan->user;
-        } else {
-            $user = null;
-        }
+        // Cari user berdasarkan NPWP di tabel users
+        $user = User::where('npwp', $data['npwp'])->first();
 
         // Cek apakah user ditemukan dan password benar
         if (!$user || !Hash::check($data['password'], $user->password)) {
@@ -83,18 +82,21 @@ class UserController extends Controller
             $user->save();
         }
 
-        return new UserResource($user->load('profileable'));
+        return new UserResource($user);
     }
 
     /**
-     * @return \App\Models\User
+     * Get the authenticated user.
      */
-    public function getUser()
+    public function getUser(): UserResource
     {
         $user = Auth::user();
-        return new UserResource($user->load('profileable'));
+        return new UserResource($user);
     }
 
+    /**
+     * Update the authenticated user's information.
+     */
     public function update(UserUpdateRequest $request): UserResource
     {
         $data = $request->validated();
@@ -108,17 +110,18 @@ class UserController extends Controller
             $user->password = Hash::make($data['password']);
         }
 
-        /** @var \App\Models\User $user **/
         $user->save();
-        return new UserResource($user->load('profileable'));
+        return new UserResource($user);
     }
 
+    /**
+     * Log out the authenticated user.
+     */
     public function logout(Request $request): JsonResponse
     {
         $user = Auth::user();
         $user->token = null;
 
-        /** @var \App\Models\User $user **/
         $user->save();
 
         return response()->json([

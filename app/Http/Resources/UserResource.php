@@ -15,19 +15,19 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'token' => $this->whenNotNull($this->token),
             'id' => $this->id,
             'email' => $this->email,
             'passphrase' => $this->passphrase,
             'role' => $this->role,
-            'profile' => $this->whenLoaded('profileable', function () {
-                if ($this->profileable instanceof \App\Models\IdentitasOrang) {
-                    return new IdentitasResource($this->profileable);
-                } elseif ($this->profileable instanceof \App\Models\IdentitasPerusahaan) {
-                    return new IdentitasPerusahaanResource($this->profileable);
-                }
-                return null;
-            }),
-            'token' => $this->whenNotNull($this->token)
+            'nama' => $this->nama,
+            'nip' => $this->nip,
+            'jabatan' => $this->jabatan,
+            'kategori_perusahaan' => $this->kategori_perusahaan,
+            'npwp' => $this->npwp,
+            'nik' => $this->nik,
+            'alamat' => $this->alamat,
+            'created_at' => $this->created_at,
         ];
     }
 }
