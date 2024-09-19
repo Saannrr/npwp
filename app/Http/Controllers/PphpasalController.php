@@ -22,7 +22,7 @@ class PphpasalController extends Controller
      */
     public function getAll()
     {
-        $pphpasal = PphPasal::all();
+        $pphpasal = PphPasal::withTrashed()->get();
         return PphpasalResource::collection($pphpasal);
     }
 
