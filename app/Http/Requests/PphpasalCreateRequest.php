@@ -42,7 +42,8 @@ class PphpasalCreateRequest extends FormRequest
             'tarif' => ['decimal:0,5'],
             'jumlah_setor' => ['integer'],
             'kelebihan_pemotongan' => ['required', 'in:pengembalian,pemindahbukuan'],
-            'status' => ['string']
+            'status' => ['string'],
+            'revisi' => ['string'],
         ];
     }
 

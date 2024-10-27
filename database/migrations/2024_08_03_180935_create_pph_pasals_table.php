@@ -33,6 +33,7 @@ return new class extends Migration
             $table->integer('jumlah_setor');
             $table->enum('kelebihan_pemotongan', ['pengembalian', 'pemindahbukuan'])->nullable(false);
             $table->string('status');
+            $table->string('revisi')->default('0');
             $table->timestamps();
             $table->softDeletes();
 

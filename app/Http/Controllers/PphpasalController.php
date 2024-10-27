@@ -211,6 +211,9 @@ class PphpasalController extends Controller
             }
         }
 
+        // Tambahkan satu ke kolom revisi sebelum update
+        $pphpasal->revisi += 1;
+
         // Update data PphPasal dengan data baru
         $pphpasal->update($data);
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\PostingPphResource;
 use App\Http\Requests\PostingPphCreateRequest;
+use App\Http\Resources\PphpasalResource;
 
 class PostingPphController extends Controller
 {
@@ -34,6 +35,26 @@ class PostingPphController extends Controller
             'errors' => 'Posting Pph tidak ditemukan'
         ], 404);
     }
+
+    // public function cariTanggalPph(Request $request): JsonResponse
+    // {
+    //     $tahunPajak = $request->input('tahun_pajak');
+    //     $masaPajak = $request->input('masa_pajak');
+
+    //     $pphPasals = PphPasal::where('tahun_pajak', $tahunPajak)
+    //         ->where('masa_pajak', $masaPajak)
+    //         ->get();
+
+    //     if ($pphPasals) {
+    //         return response()->json([
+    //             new PphpasalResource($pphPasals)
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'errors' => 'Pph dengan tanggal yang diinput tidak ditemukan'
+    //     ], 404);
+    // }
 
     public function create(PostingPphCreateRequest $request): JsonResponse
     {

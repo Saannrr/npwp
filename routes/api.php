@@ -63,6 +63,7 @@ Route::middleware(\App\Http\Middleware\ApiAuthMiddleware::class)->group(function
     Route::get('/cari-pajak-penghasilan', [\App\Http\Controllers\PajakPenghasilanController::class, 'cariPajakPenghasilan']);
     Route::post('/posting-pph', [\App\Http\Controllers\PajakPenghasilanController::class, 'postPajakPenghasilan']);
     Route::delete('/pajak-penghasilan/{id}', [\App\Http\Controllers\PajakPenghasilanController::class, 'destroy']);
+    Route::get('/cek-status-posting', [\App\Http\Controllers\PajakPenghasilanController::class, 'cekStatusPostingPajakPenghasilan']);
 
     // Perekaman BP
     Route::get('/perekaman-bp', [\App\Http\Controllers\PerekamanBpController::class, 'getAll']);

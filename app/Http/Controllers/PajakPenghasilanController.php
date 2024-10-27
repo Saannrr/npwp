@@ -43,6 +43,53 @@ class PajakPenghasilanController extends Controller
         ], 404);
     }
 
+    public function cekStatusPostingPajakPenghasilan(Request $request): JsonResponse
+    {
+        // Ambil input dari request
+        $tahunPajak = $request->input('tahun_pajak');
+        $masaPajak = $request->input('masa_pajak');
+
+        // Query pajak_penghasilans berdasarkan relasi ke pphpasal dan cek apakah sudah dipost
+        $pajakPenghasilans = PajakPenghasilan::with('pphpasal')->whereHas('pphpasal', function ($query) use ($tahunPajak, $masaPajak) {
+            $query->where('tahun_pajak', $tahunPajak)
+                ->where('masa_pajak', $masaPajak);
+        })->get();
+
+        // Cek apakah data ditemukan
+        if ($pajakPenghasilans->isNotEmpty()) {
+            // Mapping data untuk mengecek status posting
+            $dataPajak = $pajakPenghasilans->map(function ($pajakPenghasilan) {
+                // Ambil status dan revisi dari relasi pphpasal
+                $status = $pajakPenghasilan->pphpasal->status;
+                $revisi = $pajakPenghasilan->revisi ?? 0; // Gunakan revisi default 0 jika belum ada
+
+                // Tentukan status posting dan revisi
+                if ($status === 'Belum di post') {
+                    $statusPosting = 'Revisi ke-0';
+                } else {
+                    $statusPosting = 'Revisi ke-' . ($revisi + 1);
+                }
+
+                return [
+                    'id' => $pajakPenghasilan->id,
+                    'tipe' => $pajakPenghasilan->tipe_pph,
+                    'tahun_pajak' => $pajakPenghasilan->pphpasal->tahun_pajak,
+                    'masa_pajak' => $pajakPenghasilan->pphpasal->masa_pajak,
+                    'status' => $statusPosting
+                ];
+            });
+
+            return response()->json([
+                'data' => $dataPajak
+            ]);
+        }
+
+        // Jika data tidak ditemukan, kembalikan response 404
+        return response()->json([
+            'errors' => 'Pajak Penghasilan tidak ditemukan'
+        ], 404);
+    }
+
     public function postPajakPenghasilan(Request $request)
     {
         // Validate input
@@ -58,6 +105,7 @@ class PajakPenghasilanController extends Controller
         ];
 
         // Use DB transaction to wrap your logic
+        // TODO: is_posted nya jangan 0, jadinya cuma yg di belom dipost doang yg kedetect, gw mau nya yg udh di post juga bisa di post lagi biar bisa di revisi
         DB::transaction(function () use ($validated, $kodePajakMapping) {
             // Find all unposted pajak_penghasilan records
             $pajakPenghasilans = PajakPenghasilan::where('is_posted', 0)

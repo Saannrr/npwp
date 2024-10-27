@@ -35,6 +35,7 @@ class PphpasalResource extends JsonResource
             'pengaturan_id' => new PengaturanResource($this->pengaturan),
             'penandatangan_bukti_potong' => $this->penandatangan_bukti_potong,
             'status' => $this->status,
+            'revisi' => $this->revisi,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : null,
             'deleted_at' => $this->deleted_at ? $this->deleted_at->format('Y-m-d H:i:s') : null,

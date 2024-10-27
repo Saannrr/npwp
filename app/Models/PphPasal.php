@@ -36,6 +36,7 @@ class PphPasal extends Model
         'jumlah_setor',
         'kelebihan_pemotongan',
         'status',
+        'revisi',
     ];
 
     public function identitas()
